@@ -3,10 +3,10 @@ const router = express.Router();
 
 const coursesController = require("../app/controllers/CoursesController");
 
-router.use("/html-css", coursesController.htmlcss);
-router.use("/js", coursesController.js);
-router.use("/reactjs", coursesController.reactjs);
-router.use("/nodejs", coursesController.nodejs);
-router.use("/", coursesController.courses);
+router.get("/html-css", coursesController.htmlcss);
+router.get("/js", coursesController.js);
+router.get("/reactjs", coursesController.reactjs);
+router.get("/nodejs", coursesController.nodejs);
+router.get("/", coursesController.courses);
 
 module.exports = router;

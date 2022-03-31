@@ -1,7 +1,18 @@
+const Course = require("../models/Course");
+const { multipleMongooseToObject } = require("../../util/mongoose");
+
 class CoursesController {
   //[GET] /courses
-  courses(req, res) {
-    res.render("courses");
+  courses(req, res, next) {
+    Course.find({})
+      .then((courses) =>
+        res.render("courses", {
+          title: "Courses Page",
+          courses: multipleMongooseToObject(courses),
+        }),
+      )
+      // .catch((error) => next(error));
+      .catch(next);
   }
 
   //[GET] /courses/html-css
