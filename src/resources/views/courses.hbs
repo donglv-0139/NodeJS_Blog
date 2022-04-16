@@ -1,14 +1,23 @@
 <h1 style="text-align: center;">{{title}}</h1>
 <div class="mt-4 container">
     <div class="row">
+        <div class="col-2 ml-3">
+            <div class="btn btn-primary ">
+                <a class="text-white" href="/courses/create">Đăng khóa học</a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         {{#each courses}}
         <div class="col-sm-6 col-lg-4">
             <div class="card card-course-item" >
-                <img src="{{this.image}}" class="card-img-top" alt="{{this.name}}">
+                <a href="/courses/{{this.slug}}">
+                    <img src="{{this.image}}" class="card-img-top" alt="{{this.name}}">
+                </a>
                 <div class="card-body">
                     <h5 class="card-title">{{this.name}}</h5>
                     <p class="card-text">{{this.description}}</p>
-                    <a href="#" class="btn btn-primary">Get Course</a>
+                    <a href="/courses/{{this.slug}}" class="btn btn-primary">Get Course</a>
                 </div>
             </div>
         </div>

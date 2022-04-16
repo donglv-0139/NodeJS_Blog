@@ -1,5 +1,8 @@
 const Course = require("../models/Course");
-const { multipleMongooseToObject } = require("../../util/mongoose");
+const {
+  mongooseToObject,
+  multipleMongooseToObject,
+} = require("../../util/mongoose");
 
 class CoursesController {
   //[GET] /courses
@@ -15,24 +18,27 @@ class CoursesController {
       .catch(next);
   }
 
-  //[GET] /courses/html-css
-  htmlcss(req, res) {
-    res.send("HTML-CSS Course");
+  // [GET] /courses/:slug
+  show(req, res, next) {
+    Course.findOne({ slug: req.params.slug })
+      .then((course) =>
+        res.render("courses/show", { course: mongooseToObject(course) }),
+      )
+      .catch(next);
   }
 
-  //[GET] /courses/JS
-  js(req, res) {
-    res.send("JavaScript Course");
+  // [GET] /courses/create
+  create(req, res, next) {
+    res.render("courses/create");
   }
 
-  //[GET] /courses/reactjs
-  reactjs(req, res) {
-    res.send("ReactJS Course");
-  }
-
-  //[GET] /courses/nodejs
-  nodejs(req, res) {
-    res.send("NodeJS Course");
+  // [POST] /courses/store
+  store(req, res, next) {
+    const course = new Course(req.body);
+    course
+      .save() //save to DB
+      .then(() => res.redirect("/courses"))
+      .catch((error) => res.send("Create failed!"));
   }
 }
 
