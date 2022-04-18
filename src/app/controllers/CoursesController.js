@@ -3,6 +3,7 @@ const {
   mongooseToObject,
   multipleMongooseToObject,
 } = require("../../util/mongoose");
+const { renderSync } = require("node-sass");
 
 class CoursesController {
   //[GET] /courses
@@ -56,6 +57,33 @@ class CoursesController {
   update(req, res, next) {
     Course.updateOne({ _id: req.params.id }, req.body)
       .then(() => res.redirect("/me/stored/courses"))
+      .catch(next);
+  }
+
+  //[DELETE] /courses/:id
+  destroy(req, res, next) {
+    // DELETE
+    // Course.deleteOne({ _id: req.params.id })
+    //   .then(() => res.redirect("back"))
+    //   .catch(next);
+
+    // SOFT DELETE
+    Course.delete({ _id: req.params.id })
+      .then(() => res.redirect("back"))
+      .catch(next);
+  }
+
+  //[DELETE] /courses/:id/force
+  forceDestroy(req, res, next) {
+    Course.deleteOne({ _id: req.params.id })
+      .then(() => res.redirect("back"))
+      .catch(next);
+  }
+
+  // [PATCH] /courses/:id/restore
+  restore(req, res, next) {
+    Course.restore({ _id: req.params.id })
+      .then(() => res.redirect("back"))
       .catch(next);
   }
 }
